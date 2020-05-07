@@ -1,6 +1,9 @@
 package fr.alasdiablo.hamster
 
 import fr.alasdiablo.hamster.command.CommandHandler
+import fr.alasdiablo.hamster.event.NewHamster
+import fr.alasdiablo.hamster.leveling.MessageLevel
+import fr.alasdiablo.hamster.leveling.VoiceLevel
 import fr.alasdiablo.hamster.voice.FurnaceVoice
 import fr.alasdiablo.hamster.voice.GardenVoice
 import net.dv8tion.jda.api.JDABuilder
@@ -20,6 +23,9 @@ fun main(vararg args: String) {
         bot.addEventListener(CommandHandler(bot))
         bot.addEventListener(FurnaceVoice())
         bot.addEventListener(GardenVoice())
+        bot.addEventListener(NewHamster())
+        bot.addEventListener(VoiceLevel())
+        bot.addEventListener(MessageLevel())
         bot.awaitReady()
     } else {
         println("Pls add a token in the command line")

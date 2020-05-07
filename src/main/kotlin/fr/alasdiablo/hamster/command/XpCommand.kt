@@ -1,11 +1,13 @@
 package fr.alasdiablo.hamster.command
 
+import fr.alasdiablo.hamster.data.Database
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import java.awt.Color
 import java.time.OffsetDateTime
 
-class HelpCommand : ICommand {
+class XpCommand: ICommand {
+
     override fun run(message: String, event: MessageReceivedEvent) {
         if (event.channel.id != "707917208742789161") {
             event.author.openPrivateChannel().queue { channel ->
@@ -14,15 +16,17 @@ class HelpCommand : ICommand {
             event.message.delete().complete()
             return
         }
+        val voiceXp = Database.getVoiceXp(event.author.idLong)
+        val messageXp = Database.getMessageXp(event.author.idLong)
         event.channel.sendMessage(
-            EmbedBuilder()
+                EmbedBuilder()
                 .setTitle("**Royal Hamster Club**")
                 .setColor(Color(255, 114, 247))
                 .setTimestamp(OffsetDateTime.now())
+                .setDescription("Résumé pour **" + event.author.name + "**")
                 .setFooter("Hamster Bot", "https://cdn.discordapp.com/avatars/707870242159984653/049fe39e8b1550a050293988dd02a958.png")
-                .addField(">help", "Affiche l'aide", true)
-                .addField(">xp", "Affiche le Résumé de l'xp optenue", true)
-                .addField("**A propos**", "Bot crée par AlasDiablo pour le `Royal Hamster Club`.", false)
+                .addField("Xp vocal", voiceXp.toString(), false)
+                .addField("Xp textuel", messageXp.toString(), false)
                 .build()
         ).submit()
         event.message.addReaction("✅").submit()
