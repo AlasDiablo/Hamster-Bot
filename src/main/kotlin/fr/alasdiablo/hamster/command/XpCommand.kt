@@ -16,14 +16,14 @@ class XpCommand: ICommand {
             event.message.delete().complete()
             return
         }
-        val voiceXp = Database.getVoiceXp(event.author.idLong)
-        val messageXp = Database.getMessageXp(event.author.idLong)
+        val voiceXp = Database.GlobalStats.getVoiceXp(event.author.idLong)
+        val messageXp = Database.GlobalStats.getMessageXp(event.author.idLong)
         event.channel.sendMessage(
                 EmbedBuilder()
                 .setTitle("**Royal Hamster Club**")
                 .setColor(Color(255, 114, 247))
                 .setTimestamp(OffsetDateTime.now())
-                .setDescription("Résumé pour **" + event.author.name + "**")
+                .setDescription("Résumé pour **" + (if (event.member?.nickname != null) event.member!!.nickname else event.member!!.effectiveName) + "**")
                 .setFooter("Hamster Bot", "https://cdn.discordapp.com/avatars/707870242159984653/049fe39e8b1550a050293988dd02a958.png")
                 .addField("Xp vocal", voiceXp.toString(), false)
                 .addField("Xp textuel", messageXp.toString(), false)

@@ -27,6 +27,8 @@ fun main(vararg args: String) {
         bot.addEventListener(VoiceLevel())
         bot.addEventListener(MessageLevel())
         bot.awaitReady()
+        //val service = ServiceHandler(bot)
+        //service.startService()
     } else {
         println("Pls add a token in the command line")
     }

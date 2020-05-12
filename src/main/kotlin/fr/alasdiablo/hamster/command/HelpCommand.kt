@@ -22,6 +22,7 @@ class HelpCommand : ICommand {
                 .setFooter("Hamster Bot", "https://cdn.discordapp.com/avatars/707870242159984653/049fe39e8b1550a050293988dd02a958.png")
                 .addField(">help", "Affiche l'aide", true)
                 .addField(">xp", "Affiche le Résumé de l'xp optenue", true)
+                .addField(">rank <voice/message>", "Affiche classement des hamster", true)
                 .addField("**A propos**", "Bot crée par AlasDiablo pour le `Royal Hamster Club`.", false)
                 .build()
         ).submit()

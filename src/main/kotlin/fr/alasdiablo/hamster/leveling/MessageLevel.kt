@@ -9,6 +9,6 @@ class MessageLevel: ListenerAdapter() {
     override fun onMessageReceived(event: MessageReceivedEvent) {
         val message = event.message.contentRaw
         val xp: Float = (message.length * 0.1f)
-        Database.addMessageXp(xp, event.author.idLong)
+        Database.GlobalStats.addMessageXp(xp, event.author.idLong)
     }
 }

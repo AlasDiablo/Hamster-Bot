@@ -17,6 +17,7 @@ class CommandHandler(private val bot: JDA) : ListenerAdapter() {
                 message.startsWith(HamsterBot.PREFIX + "help") -> HelpCommand().run(message, event)
                 message.startsWith(HamsterBot.PREFIX + "role") -> RoleCommand(bot).run(message, event)
                 message.startsWith(HamsterBot.PREFIX + "xp") -> XpCommand().run(message, event)
+                message.startsWith(HamsterBot.PREFIX + "rank") -> RankCommand().run(message, event)
             }
         }
     }
