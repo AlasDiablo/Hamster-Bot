@@ -48,6 +48,7 @@ public class VoiceLevel extends ListenerAdapter {
                                 .addField("Tu as gagné cette quantité d'XP", String.valueOf(xp), false)
                                 .build()
                 ).submit();
+                new LevelHandler().checkVoiceLevel(event.getEntity().getIdLong(), event);
             } catch (Exception ignored) {}
         }
     }

@@ -2,7 +2,6 @@ package fr.alasdiablo.hamster.command
 
 import fr.alasdiablo.hamster.data.Database
 import net.dv8tion.jda.api.EmbedBuilder
-import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import java.awt.Color
 import java.time.OffsetDateTime
@@ -24,7 +23,7 @@ class RankCommand: ICommand {
                         .setTitle("**Royal Hamster Club**")
                         .setColor(Color(255, 114, 247))
                         .setTimestamp(OffsetDateTime.now())
-                        .setDescription("Classement Des Hamster Parleur")
+                        .setDescription("Classement Des Hamsters Parleurs")
                         .setFooter("Hamster Bot", "https://cdn.discordapp.com/avatars/707870242159984653/049fe39e8b1550a050293988dd02a958.png")
                 var pos = 1
                 for (i in 0..sizeClassment) {
@@ -48,7 +47,7 @@ class RankCommand: ICommand {
                         .setTitle("**Royal Hamster Club**")
                         .setColor(Color(255, 114, 247))
                         .setTimestamp(OffsetDateTime.now())
-                        .setDescription("Classement Des Hamster Messagé")
+                        .setDescription("Classement Des Hamsters Messagers")
                         .setFooter("Hamster Bot", "https://cdn.discordapp.com/avatars/707870242159984653/049fe39e8b1550a050293988dd02a958.png")
                 var pos = 1
                 for (i in 0..sizeClassment) {
@@ -70,17 +69,6 @@ class RankCommand: ICommand {
             }
         }
         event.message.addReaction("✅").submit()
-    }
-
-
-    private fun getMemberName(id: Long, event: MessageReceivedEvent): String? {
-        var name: String? = null
-        event.guild.members.forEach {
-            if (it.idLong == id) {
-                name = it.effectiveName
-            }
-        }
-        return name
     }
 
 }

@@ -32,9 +32,9 @@ public class Database {
             userXpTableCreation.close();
 
             PreparedStatement userOfTheDayTableCreation = connection.prepareStatement(
-            "create table if not exists USEROFDAY (" +
+            "create table if not exists USERLEVEL (" +
                 "user_id int," +
-                "xp float" +
+                "user_level int" +
                 ")"
             );
             userOfTheDayTableCreation.execute();
@@ -53,54 +53,53 @@ public class Database {
         return (connection != null) ? connection : createConnection();
     }
 
-
-    public static class StatsOfTheDay {
+    public static class LevelStats {
         private static void checkUser(long user) {
             try {
                 PreparedStatement check = getDatabase().prepareStatement(
-                        "SELECT * FROM USEROFDAY WHERE user_id = ?"
+                        "SELECT * FROM USERLEVEL WHERE user_id = ?"
                 );
                 check.setLong(1, user);
                 ResultSet resultSet = check.executeQuery();
                 if (!resultSet.next()) {
                     PreparedStatement setIn = getDatabase().prepareStatement(
-                            "INSERT INTO USERXP VALUES (?, 0)"
+                            "INSERT INTO USERLEVEL VALUES (?, 0)"
                     );
                     setIn.setLong(1, user);
                     setIn.executeUpdate();
                     setIn.close();
                 }
                 check.close();
-            } catch (SQLException ignored) {
-                ignored.printStackTrace();
-            }
+            } catch (SQLException ignored) {}
         }
 
-        public static void addXp(float xp, long user) {
-            StatsOfTheDay.checkUser(user);
+        public static void setLevel(int level, long user) {
+            LevelStats.checkUser(user);
             try {
                 PreparedStatement statement = getDatabase().prepareStatement(
-                        "UPDATE USEROFDAY SET xp = xp + ? WHERE user_id = ?"
+                        "UPDATE USERLEVEL SET user_level = ? WHERE user_id = ?"
                 );
-                statement.setFloat(1, xp);
+                statement.setFloat(1, level);
                 statement.setLong(2, user);
                 statement.executeUpdate();
                 statement.close();
             } catch (SQLException ignored) {}
         }
 
-        public static Map<Long, Float> getUsersList() {
+        public static int getLevel(long user) {
+            LevelStats.checkUser(user);
             try {
                 PreparedStatement statement = getDatabase().prepareStatement(
-                        "UPDATE USEROFDAY SET xp = xp + ? WHERE user_id = ?"
+                        "SELECT user_level FROM USERLEVEL WHERE user_id = ?"
                 );
-                //statement.setFloat(1, xp);
-                //statement.setLong(2, user);
-                statement.executeUpdate();
+                statement.setLong(1, user);
+                ResultSet resultSet = statement.executeQuery();
+                resultSet.next();
+                int result = resultSet.getInt("user_level");
                 statement.close();
+                return result;
             } catch (SQLException ignored) {}
-
-            return null;
+            return -1;
         }
     }
 
